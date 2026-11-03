@@ -1,27 +1,4 @@
-# Build artifacts
 /target/
-**/*.rs.bk
-*.o
-*.a
-*.so
-*.dylib
-*.dll
-*.exe
-*.elf
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
+Cargo.lock
+*.log
 .DS_Store
-Thumbs.db
-
-# Documentation (per SigmaOS policy: docs in wiki)
-*.md
-!README.md
-!CONTRIBUTING.md
-!LICENSE
