@@ -1,0 +1,8 @@
+[component]
+name = "SigmaOS-update"
+version = "0.1.0"
+maturity = "alpha"
+tier = 3
+owner = "SigmaOS Team"
+purpose = "Staged OS update pipeline with delta support and rollback capability"
+dependencies = ["SigmaOS-apt", "SigmaOS-keyring"]

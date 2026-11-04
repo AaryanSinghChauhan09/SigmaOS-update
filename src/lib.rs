@@ -1,46 +1,29 @@
-//! SigmaOS-update - Sovereign System Update & Testing Engine
-//!
-//! Inspired by Linux Mint Update Manager (mintupdate), Arch pacman/eos-rankmirrors, Debian unattended-upgrades,
-//! OSTree/A-B partition updaters, and openSUSE transactional-update.
-//! Principles: Arrange-Act-Assert, Minimal Kernel Philosophy, Fail-Fast, High Cohesion, Low Coupling.
-
 pub mod config;
 pub mod error;
 pub mod service;
-pub mod package;
-pub mod installer;
-pub mod cache;
-pub mod update;
-pub mod mintupdate;
-
+pub mod update_pipeline;
 pub use config::Config;
 pub use error::{ComponentError, Result};
-pub use service::Service;
-pub use package::{Package, PackageRepository, Version, DependencyResolver};
-pub use installer::{PackageInstaller, InstallTransaction, InstallStep};
-pub use cache::{PackageCache, CacheEntry};
-pub use update::{
-    SovereignSystemUpdateManager, SystemUpdatePayload, SystemUpdatePolicy,
-    SystemUpdateStrategy, UpdateSeverity, PreflightCheckResult,
-};
-
-/// High-level update subsystem controller.
-pub struct Update {
-    pub config: Config,
+pub use service::{Service, ServiceStatus};
+pub use update_pipeline::{UpdateChannel, UpdatePipeline, UpdateSpec, UpdateState};
+pub trait Component {
+    fn name(&self) -> &str;
+    fn version(&self) -> &str;
+    fn initialize(&mut self) -> error::Result<()>;
+    fn shutdown(&mut self) -> error::Result<()>;
+    fn health_check(&self) -> error::Result<()>;
 }
-
-impl Update {
-    pub fn new(config: Config) -> Self {
-        Self { config }
-    }
-
-    pub fn initialize(&mut self) -> Result<()> {
-        log::info!("Initializing SigmaOS-update");
-        Ok(())
-    }
-
-    pub fn run(&mut self) -> Result<()> {
-        log::info!("Running SigmaOS-update");
-        Ok(())
+pub struct UpdateComponent { service: service::Service }
+impl UpdateComponent {
+    pub fn new(config: Config) -> Self { Self { service: service::Service::new(config) } }
+}
+impl Component for UpdateComponent {
+    fn name(&self) -> &str { "sigmaos-update" }
+    fn version(&self) -> &str { env!("CARGO_PKG_VERSION") }
+    fn initialize(&mut self) -> error::Result<()> { self.service.start() }
+    fn shutdown(&mut self) -> error::Result<()> { self.service.stop() }
+    fn health_check(&self) -> error::Result<()> {
+        if self.service.is_running() { Ok(()) }
+        else { Err(error::ComponentError::Service("update service not running".to_string())) }
     }
 }
