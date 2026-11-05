@@ -1,29 +1,27 @@
-pub mod config;
-pub mod error;
-pub mod service;
-pub mod update_pipeline;
-pub use config::Config;
-pub use error::{ComponentError, Result};
-pub use service::{Service, ServiceStatus};
-pub use update_pipeline::{UpdateChannel, UpdatePipeline, UpdateSpec, UpdateState};
-pub trait Component {
-    fn name(&self) -> &str;
-    fn version(&self) -> &str;
-    fn initialize(&mut self) -> error::Result<()>;
-    fn shutdown(&mut self) -> error::Result<()>;
-    fn health_check(&self) -> error::Result<()>;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum UpdateStatus { #[default] Idle, Staging, AppliedPendingReboot, RolledBack }
+
+#[derive(Debug, Default)]
+pub struct UpdateAgent {
+    status: UpdateStatus,
 }
-pub struct UpdateComponent { service: service::Service }
-impl UpdateComponent {
-    pub fn new(config: Config) -> Self { Self { service: service::Service::new(config) } }
+
+impl UpdateAgent {
+    pub fn new() -> Self { Self::default() }
+    pub fn apply_update(&mut self) { self.status = UpdateStatus::AppliedPendingReboot; }
+    pub fn rollback_on_failure(&mut self) { self.status = UpdateStatus::RolledBack; }
+    pub fn get_status(&self) -> UpdateStatus { self.status }
 }
-impl Component for UpdateComponent {
-    fn name(&self) -> &str { "sigmaos-update" }
-    fn version(&self) -> &str { env!("CARGO_PKG_VERSION") }
-    fn initialize(&mut self) -> error::Result<()> { self.service.start() }
-    fn shutdown(&mut self) -> error::Result<()> { self.service.stop() }
-    fn health_check(&self) -> error::Result<()> {
-        if self.service.is_running() { Ok(()) }
-        else { Err(error::ComponentError::Service("update service not running".to_string())) }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_update_agent_status_flow() {
+        let mut agent = UpdateAgent::new();
+        agent.apply_update();
+        assert_eq!(agent.get_status(), UpdateStatus::AppliedPendingReboot);
+        agent.rollback_on_failure();
+        assert_eq!(agent.get_status(), UpdateStatus::RolledBack);
     }
 }

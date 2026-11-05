@@ -1,21 +1,9 @@
 [package]
-name = "sigmaos-update"
+name = "sigmaos_update"
 version = "0.1.0"
 edition = "2021"
-authors = ["SigmaOS Team"]
-license = "MIT OR Apache-2.0"
-description = "SigmaOS update - staged OS update pipeline with delta support and rollback capability"
+description = "System update agent coordinating staged downloads, health-check validation, and atomic rollback"
 
-[[bin]]
-name = "sigmaos-update"
-path = "src/main.rs"
-
-[dependencies]
-anyhow = "1.0"
-thiserror = "1.0"
-log = "0.4"
-env_logger = "0.10"
-serde = { version = "1.0", features = ["derive"] }
-toml = "0.8"
-
-[dev-dependencies]
+[lib]
+name = "sigmaos_update"
+path = "src/lib.rs"

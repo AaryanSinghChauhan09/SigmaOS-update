@@ -1,8 +1,16 @@
 [component]
 name = "SigmaOS-update"
-version = "0.1.0"
-maturity = "alpha"
-tier = 3
-owner = "SigmaOS Team"
-purpose = "Staged OS update pipeline with delta support and rollback capability"
-dependencies = ["SigmaOS-apt", "SigmaOS-keyring"]
+tier = 2
+stability = "scaffold"
+language = "rust"
+description = "System update agent coordinating staged downloads, health-check validation, and atomic rollback"
+upstream = ["https://github.com/flatcar/update-engine"]
+
+[contract]
+provides = ["update-agent", "staged-rollout", "rollback-daemon"]
+depends_on = []
+
+[maturity]
+status = "Scaffold"
+test_evidence = "Compiles and passes AAA unit tests"
+next_milestone = "Hardware and runtime integration"

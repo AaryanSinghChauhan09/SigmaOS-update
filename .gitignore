@@ -1,5 +1,4 @@
-/target/
+/target
 Cargo.lock
-*.log
-.DS_Store
-target/
+*.swp
+*.bak
