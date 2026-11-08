@@ -2,7 +2,8 @@
 name = "sigmaos_update"
 version = "0.1.0"
 edition = "2021"
-description = "System update agent coordinating staged downloads, health-check validation, and atomic rollback"
+license = "MIT"
+description = "SigmaOS update component inspired by Linux Mint / Omarchy / Arch Linux."
 
 [lib]
 name = "sigmaos_update"
