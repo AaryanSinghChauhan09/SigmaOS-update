@@ -1,7 +1,7 @@
 [component]
 name = "SigmaOS-update"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
 description = "Update notifier & apply (apt backend)"
 upstream = ["https://github.com/flatcar/update-engine"]
@@ -11,6 +11,6 @@ provides = ["update-agent", "staged-rollout", "rollback-daemon"]
 depends_on = ["SigmaOS-common", "SigmaOS-packages", "SigmaOS-system"]
 
 [maturity]
-status = "Scaffold"
+status = "Implemented"
 test_evidence = "Compiles and passes AAA unit tests"
 next_milestone = "Hardware and runtime integration"
