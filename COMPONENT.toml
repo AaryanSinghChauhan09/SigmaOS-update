@@ -3,12 +3,12 @@ name = "SigmaOS-update"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "System update agent coordinating staged downloads, health-check validation, and atomic rollback"
+description = "Update notifier & apply (apt backend)"
 upstream = ["https://github.com/flatcar/update-engine"]
 
 [contract]
 provides = ["update-agent", "staged-rollout", "rollback-daemon"]
-depends_on = []
+depends_on = ["SigmaOS-common", "SigmaOS-packages", "SigmaOS-system"]
 
 [maturity]
 status = "Scaffold"
