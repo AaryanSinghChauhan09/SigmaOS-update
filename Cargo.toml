@@ -1,9 +1,9 @@
 [package]
-name = "sigmaos_update"
+name = "SigmaOS-update"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
-description = "SigmaOS update component inspired by Linux Mint / Omarchy / Arch Linux."
+license = "Apache-2.0"
+description = "SigmaOS sigmaos-update component"
 
 [lib]
 name = "sigmaos_update"

@@ -1,7 +1,7 @@
 # SigmaOS-SigmaOS-update Component Wiki
 
 ## Overview
-SigmaOS-SigmaOS-update provides Update notifier DESCRIPTION apply (apt backend) for the SigmaOS operating system. It demonstrates the subsystem and integration within the SigmaOS ecosystem, following the principles of clear abstraction and deterministic initialization.
+SigmaOS-SigmaOS-update provides System update manager for the SigmaOS operating system. It demonstrates the subsystem and integration within the SigmaOS ecosystem, following the principles of clear abstraction and deterministic initialization.
 
 ## Principles
 - Single Responsibility
@@ -20,10 +20,10 @@ SigmaOS-SigmaOS-update follows a SigmaOS-update pattern:
 
 ## API
 The component provides the following public APIs:
-- `core::manage(SigmaOS-update)` - Manage a SigmaOS-update by given configuration
-- `core::register(SigmaOS-update)` - Register a SigmaOS-update by given name
-- `core::status::SigmaOS-update()` - Get SigmaOS-update status and SigmaOS-update availability
-- `core::track::SigmaOS-update()` - Track SigmaOS-update management and SigmaOS-update tracking
+-  - Manage a SigmaOS-update by given configuration
+-  - Register a SigmaOS-update by given name
+-  - Get SigmaOS-update status and SigmaOS-update availability
+-  - Track SigmaOS-update management and SigmaOS-update tracking
 - Error types for SigmaOS-update failure scenarios or unsupported SigmaOS-update types
 
 ## Test Structure (Arrange-Act-ASSERT)
@@ -33,24 +33,10 @@ All tests follow the AAA pattern:
 3. **Assert**: Verify the expected SigmaOS-update results
 
 Example:
-```rust
-#[test]
-fn test_SigmaOS-update_aaa() {
-    // Arrange
-    let SigmaOS-update = SigmaOS-update::new("my-SigmaOS-update");
-    
-    // Act
-    let result = core::manage(SigmaOS-update);
-    
-    // Assert
-    assert!(result.is_ok());
-    let managed = result.unwrap();
-    assert!(managed.is_managed());
-}
-```
+
 
 ## Development
-- Follows Rust best practices with `#![forbid(unsafe_code)]`
+- Follows Rust best practices with 
 - SigmaOS-update initialization is best-effort; gracefully degrades on unsupported configurations
 - Comprehensive error types for all SigmaOS-update failure scenarios
 - Unit tests provided for SigmaOS-update management and configuration

@@ -1,9 +1,9 @@
 # SigmaOS-update
 
-Update notifier & apply (apt backend)
+Update manager for SigmaOS inspired by SigmaOS Linux
 
-- **Category:** Package Management
-- **Engine:** update_checker
+- **Category:** Utilities
+- **Engine:** update_manager
 - **Language:** Rust
 
 ## Build & Test
